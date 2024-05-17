@@ -1,33 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import axios from "axios";
+import Post from "../components/post";
 
-const Home = () => {
-  const [posts, setPosts] = useState([]);
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+    };
+  }
 
-  useEffect(() => {
+  componentDidMount() {
+    this.fetchPosts();
+  }
+
+  fetchPosts = () => {
     axios
       .get("http://localhost:5000/posts")
       .then((response) => {
-        setPosts(response.data);
+        this.setState({ posts: response.data });
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
       });
-  }, []);
+  };
 
-  return (
-    <div>
-      <h1>Blog Posts</h1>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <p>Author: {post.author.name}</p>
-          {post.imageURL && <img src={post.imageURL} alt={post.title} />}
-        </div>
-      ))}
-    </div>
-  );
-};
+  render() {
+    return (
+      <div>
+        <h1>Blog Posts</h1>
+        {this.state.posts.map((post) => (
+          <Post key={post.token} post={post} />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default Home;
