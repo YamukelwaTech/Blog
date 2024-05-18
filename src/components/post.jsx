@@ -17,7 +17,9 @@ class Post extends Component {
   handleUpdatePost = () => {
     const { post } = this.props;
     axios
-      .put(`http://localhost:5000/posts/${post.token}`, { content: this.state.content })
+      .put(`http://localhost:5000/posts/${post.token}`, {
+        content: this.state.content,
+      })
       .then(() => {
         this.setState({ editable: false });
       })
@@ -27,11 +29,11 @@ class Post extends Component {
   };
 
   handleDeletePost = () => {
-    const { post } = this.props;
+    const { post, onDelete } = this.props;
     axios
       .delete(`http://localhost:5000/posts/${post.token}`)
       .then(() => {
-        // Handle post deletion in parent component
+        onDelete(post.token);
       })
       .catch((error) => {
         console.error("Error deleting post:", error);
@@ -62,7 +64,9 @@ class Post extends Component {
             <button onClick={this.handleDeletePost}>Delete</button>
           </>
         )}
-        {this.state.editable && <button onClick={this.handleUpdatePost}>Update</button>}
+        {this.state.editable && (
+          <button onClick={this.handleUpdatePost}>Update</button>
+        )}
       </div>
     );
   }
