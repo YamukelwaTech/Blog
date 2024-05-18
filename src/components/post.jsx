@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { ReactComponent as EditIcon } from "../assets/Icons/edit.svg";
+import { ReactComponent as DeleteIcon } from "../assets/Icons/delete.svg";
+import { ReactComponent as UpdateIcon } from "../assets/Icons/update.svg";
 
 class Post extends Component {
   constructor(props) {
@@ -71,6 +74,7 @@ class Post extends Component {
     const { post } = this.props;
     const contentLength = this.state.content.length;
     const minHeight = contentLength <= 80 ? "80px" : "210px";
+    const iconSize = "1rem";
 
     return (
       <div
@@ -78,51 +82,50 @@ class Post extends Component {
         onScroll={this.handleScroll}
         ref={this.containerRef}
       >
-        <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
-        <textarea
-        className="w-full p-2 mb-2 resize-none"
-        value={this.state.content}
-        onChange={this.handleContentChange}
-        style={{ height: minHeight, border: "none" }}
-        readOnly={!this.state.editable}
-      />
-
-        {post.imageURL && (
-          <div className="flex items-center mb-2">
+        <div className="flex items-center mb-2">
+          {post.imageURL && (
             <img
               className="w-9 h-9 rounded-full mr-2"
               src={post.imageURL}
               alt={post.title}
             />
-            <span>{post.author.name}</span>
+          )}
+          <span>{post.author.name}</span>
+          <div className="ml-auto">
+            {!this.state.editable && (
+              <div className="flex space-x-2">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  onClick={this.handleEditPost}
+                >
+                  <EditIcon width={iconSize} height={iconSize} />
+                </button>
+                <button
+                  className="bg-red-500 text-white px-4 py-1 rounded-md"
+                  onClick={this.handleDeletePost}
+                >
+                  <DeleteIcon width={iconSize} height={iconSize} />
+                </button>
+              </div>
+            )}
+            {this.state.editable && (
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                onClick={this.handleUpdatePost}
+              >
+                <UpdateIcon width={iconSize} height={iconSize} />
+              </button>
+            )}
           </div>
-        )}
-        <div className="flex justify-between items-center">
-          {!this.state.editable && (
-            <div className="flex space-x-2">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                onClick={this.handleEditPost}
-              >
-                Edit
-              </button>
-              <button
-                className="bg-red-500 text-white px-4 py-1 rounded-md"
-                onClick={this.handleDeletePost}
-              >
-                Delete
-              </button>
-            </div>
-          )}
-          {this.state.editable && (
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded-md"
-              onClick={this.handleUpdatePost}
-            >
-              Update
-            </button>
-          )}
         </div>
+        <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
+        <textarea
+          className="w-full p-2 mb-2 resize-none"
+          value={this.state.content}
+          onChange={this.handleContentChange}
+          style={{ height: minHeight, border: "none" }}
+          readOnly={!this.state.editable}
+        />
       </div>
     );
   }
