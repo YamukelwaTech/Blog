@@ -8,6 +8,7 @@ class Post extends Component {
       editable: false,
       content: this.props.post.content,
     };
+    this.containerRef = React.createRef();
   }
 
   handleEditPost = () => {
@@ -44,29 +45,84 @@ class Post extends Component {
     this.setState({ content: e.target.value });
   };
 
+  handleScroll = () => {
+    const container = this.containerRef.current;
+    const scrollOffset = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const tweets = container.children;
+
+    for (let tweet of tweets) {
+      const tweetWidth = tweet.offsetWidth;
+      const tweetOffsetLeft = tweet.offsetLeft;
+      const tweetVisibilityThreshold = tweetWidth / 2; // Adjust as needed
+
+      if (
+        tweetOffsetLeft + tweetWidth - scrollOffset <
+        containerWidth - tweetVisibilityThreshold
+      ) {
+        tweet.style.visibility = "hidden";
+      } else {
+        tweet.style.visibility = "visible";
+      }
+    }
+  };
+
   render() {
     const { post } = this.props;
+    const contentLength = this.state.content.length;
+    const minHeight = contentLength <= 80 ? "80px" : "210px";
+
     return (
-      <div>
-        <h2>{post.title}</h2>
+      <div
+        className="p-4 border border-gray-300 rounded-md shadow-md mb-4 max-w-xl mx-auto mt-20 ml-10 overflow-x-scroll"
+        onScroll={this.handleScroll}
+        ref={this.containerRef}
+      >
+        <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
         <textarea
-          value={this.state.content}
-          onChange={this.handleContentChange}
-          rows={4}
-          cols={50}
-          readOnly={!this.state.editable}
-        />
-        <p>Author: {post.author.name}</p>
-        {post.imageURL && <img src={post.imageURL} alt={post.title} />}
-        {!this.state.editable && (
-          <>
-            <button onClick={this.handleEditPost}>Edit</button>
-            <button onClick={this.handleDeletePost}>Delete</button>
-          </>
+        className="w-full p-2 mb-2 resize-none"
+        value={this.state.content}
+        onChange={this.handleContentChange}
+        style={{ height: minHeight, border: "none" }}
+        readOnly={!this.state.editable}
+      />
+
+        {post.imageURL && (
+          <div className="flex items-center mb-2">
+            <img
+              className="w-9 h-9 rounded-full mr-2"
+              src={post.imageURL}
+              alt={post.title}
+            />
+            <span>{post.author.name}</span>
+          </div>
         )}
-        {this.state.editable && (
-          <button onClick={this.handleUpdatePost}>Update</button>
-        )}
+        <div className="flex justify-between items-center">
+          {!this.state.editable && (
+            <div className="flex space-x-2">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                onClick={this.handleEditPost}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-1 rounded-md"
+                onClick={this.handleDeletePost}
+              >
+                Delete
+              </button>
+            </div>
+          )}
+          {this.state.editable && (
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded-md"
+              onClick={this.handleUpdatePost}
+            >
+              Update
+            </button>
+          )}
+        </div>
       </div>
     );
   }

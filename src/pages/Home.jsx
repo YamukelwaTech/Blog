@@ -34,10 +34,14 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Blog Posts</h1>
-        {this.state.posts.map((post) => (
-          <Post key={post.token} post={post} onDelete={this.handleDeletePost} />
-        ))}
+        <div className="fixed top-0 left-0 w-full bg-white p-4 border-b border-gray-300 z-10">
+          <h1>Blog Posts</h1>
+        </div>
+        <div className="pt-20 px-4 md:px-0 md:container md:mx-auto">
+          {this.state.posts.map((post) => (
+            <Post key={post.token} post={post} onDelete={this.handleDeletePost} />
+          ))}
+        </div>
       </div>
     );
   }
