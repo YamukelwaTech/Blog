@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Post from "../components/post";
+import Header from "../components/header";
 
 class Home extends Component {
   constructor(props) {
@@ -34,13 +35,11 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {/* Header Component */}
-        <header className="fixed top-0 left-0 w-full bg-white p-4 border-b border-gray-300 z-10">
-          <h1>Welcome</h1>
-        </header>
+        {/* Render Header Component */}
+        <Header onRefresh={this.fetchPosts} />
 
         {/* Flex container */}
-        <div className="flex flex-col md:flex-row ">
+        <div className="flex flex-col md:flex-row mt-16">
           <div className="flex-grow px-2 md:px-0 md:w-1/2">
             {this.state.posts.map((post) => (
               <div key={post.token} className="mb-4">

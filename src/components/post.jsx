@@ -75,10 +75,7 @@ class Post extends Component {
     const contentLength = this.state.content.length;
     const iconSize = "0.6rem";
 
-    // Function to calculate minHeight dynamically
     const calculateMinHeight = () => {
-      // Calculate minHeight based on contentLength or any other criteria
-      // For example:
       return contentLength <= 80 ? "40px" : "110px";
     };
 
@@ -97,7 +94,7 @@ class Post extends Component {
             />
           )}
           <span className="text-sm md:text-base">{post.author.name}</span>
-          <div className="ml-auto">
+          <div className="ml-auto mr-4">
             {!this.state.editable && (
               <div className="flex space-x-2">
                 <button
@@ -135,7 +132,6 @@ class Post extends Component {
       </div>
     );
   }
-
 }
 
 export default Post;
