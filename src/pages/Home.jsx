@@ -34,13 +34,26 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="fixed top-0 left-0 w-full bg-white p-4 border-b border-gray-300 z-10">
-          <h1>Blog Posts</h1>
-        </div>
-        <div className="pt-20 px-4 md:px-0 md:container md:mx-auto">
-          {this.state.posts.map((post) => (
-            <Post key={post.token} post={post} onDelete={this.handleDeletePost} />
-          ))}
+        {/* Header Component */}
+        <header className="fixed top-0 left-0 w-full bg-white p-4 border-b border-gray-300 z-10">
+          <h1>Welcome</h1>
+        </header>
+
+        {/* Flex container */}
+        <div className="flex flex-col md:flex-row ">
+          <div className="flex-grow px-2 md:px-0 md:w-1/2">
+            {this.state.posts.map((post) => (
+              <div key={post.token} className="mb-4">
+                <div className="w-full">
+                  <Post post={post} onDelete={this.handleDeletePost} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden md:block md:w-1/2 px-4">
+            {/* Render your dashboard interface component here */}
+          </div>
         </div>
       </div>
     );

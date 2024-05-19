@@ -73,12 +73,18 @@ class Post extends Component {
   render() {
     const { post } = this.props;
     const contentLength = this.state.content.length;
-    const minHeight = contentLength <= 80 ? "80px" : "210px";
-    const iconSize = "1rem";
+    const iconSize = "0.6rem";
+
+    // Function to calculate minHeight dynamically
+    const calculateMinHeight = () => {
+      // Calculate minHeight based on contentLength or any other criteria
+      // For example:
+      return contentLength <= 80 ? "40px" : "110px";
+    };
 
     return (
       <div
-        className="p-4 border border-gray-300 rounded-md shadow-md mb-4 max-w-xl mx-auto mt-20 ml-10 overflow-x-scroll"
+        className="p-1 border border-red-300 rounded-md shadow-md mb-4 max-w-xl mx-auto mt-20 md:ml-10 overflow-x-scroll"
         onScroll={this.handleScroll}
         ref={this.containerRef}
       >
@@ -90,18 +96,18 @@ class Post extends Component {
               alt={post.title}
             />
           )}
-          <span>{post.author.name}</span>
+          <span className="text-sm md:text-base">{post.author.name}</span>
           <div className="ml-auto">
             {!this.state.editable && (
               <div className="flex space-x-2">
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  className="bg-blue-500 text-white p-1 rounded-md flex items-center justify-center"
                   onClick={this.handleEditPost}
                 >
                   <EditIcon width={iconSize} height={iconSize} />
                 </button>
                 <button
-                  className="bg-red-500 text-white px-4 py-1 rounded-md"
+                  className="bg-red-500 text-white p-1 rounded-md flex items-center justify-center"
                   onClick={this.handleDeletePost}
                 >
                   <DeleteIcon width={iconSize} height={iconSize} />
@@ -110,7 +116,7 @@ class Post extends Component {
             )}
             {this.state.editable && (
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                className="bg-green-500 text-white p-1 rounded-md flex items-center justify-center"
                 onClick={this.handleUpdatePost}
               >
                 <UpdateIcon width={iconSize} height={iconSize} />
@@ -118,17 +124,18 @@ class Post extends Component {
             )}
           </div>
         </div>
-        <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
+        <h2 className="text-lg font-semibold mb-2 p-2 ">{post.title}</h2>
         <textarea
-          className="w-full p-2 mb-2 resize-none"
+          className="w-full p-2 mb-2 resize-none text-sm md:text-base rounded-md"
           value={this.state.content}
           onChange={this.handleContentChange}
-          style={{ height: minHeight, border: "none" }}
+          style={{ height: calculateMinHeight(), border: "none" }}
           readOnly={!this.state.editable}
         />
       </div>
     );
   }
+
 }
 
 export default Post;
