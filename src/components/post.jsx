@@ -48,30 +48,8 @@ class Post extends Component {
     this.setState({ content: e.target.value });
   };
 
-  handleScroll = () => {
-    const container = this.containerRef.current;
-    const scrollOffset = container.scrollLeft;
-    const containerWidth = container.clientWidth;
-    const tweets = container.children;
-
-    for (let tweet of tweets) {
-      const tweetWidth = tweet.offsetWidth;
-      const tweetOffsetLeft = tweet.offsetLeft;
-      const tweetVisibilityThreshold = tweetWidth / 2; // Adjust as needed
-
-      if (
-        tweetOffsetLeft + tweetWidth - scrollOffset <
-        containerWidth - tweetVisibilityThreshold
-      ) {
-        tweet.style.visibility = "hidden";
-      } else {
-        tweet.style.visibility = "visible";
-      }
-    }
-  };
-
   render() {
-    const { post } = this.props;
+    const { post, onShowDetailedPost } = this.props;
     const contentLength = this.state.content.length;
     const iconSize = "0.6rem";
 
@@ -82,7 +60,6 @@ class Post extends Component {
     return (
       <div
         className="p-1 border border-red-300 rounded-md shadow-md mb-4 max-w-xl mx-auto mt-20 md:ml-10 overflow-x-scroll"
-        onScroll={this.handleScroll}
         ref={this.containerRef}
       >
         <div className="flex items-center mb-2">
@@ -95,30 +72,37 @@ class Post extends Component {
           )}
           <span className="text-sm md:text-base">{post.author.name}</span>
           <div className="ml-auto mr-4">
-            {!this.state.editable && (
-              <div className="flex space-x-2">
+            <div className="flex space-x-2">
+              {this.state.editable ? (
                 <button
-                  className="bg-blue-500 text-white p-1 rounded-md flex items-center justify-center"
-                  onClick={this.handleEditPost}
+                  className="bg-green-500 text-white p-1 rounded-md flex items-center justify-center"
+                  onClick={this.handleUpdatePost}
                 >
-                  <EditIcon width={iconSize} height={iconSize} />
+                  <UpdateIcon width={iconSize} height={iconSize} />
                 </button>
-                <button
-                  className="bg-red-500 text-white p-1 rounded-md flex items-center justify-center"
-                  onClick={this.handleDeletePost}
-                >
-                  <DeleteIcon width={iconSize} height={iconSize} />
-                </button>
-              </div>
-            )}
-            {this.state.editable && (
-              <button
-                className="bg-green-500 text-white p-1 rounded-md flex items-center justify-center"
-                onClick={this.handleUpdatePost}
-              >
-                <UpdateIcon width={iconSize} height={iconSize} />
-              </button>
-            )}
+              ) : (
+                <>
+                  <button
+                    className="bg-blue-500 text-white p-1 rounded-md flex items-center justify-center"
+                    onClick={this.handleEditPost}
+                  >
+                    <EditIcon width={iconSize} height={iconSize} />
+                  </button>
+                  <button
+                    className="bg-red-500 text-white p-1 rounded-md flex items-center justify-center"
+                    onClick={this.handleDeletePost}
+                  >
+                    <DeleteIcon width={iconSize} height={iconSize} />
+                  </button>
+                  <button
+                    className="bg-gray-500 text-white p-1 rounded-md flex items-center justify-center"
+                    onClick={() => onShowDetailedPost(post)}
+                  >
+                    Details
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
         <h2 className="text-lg font-semibold mb-2 p-2 ">{post.title}</h2>
