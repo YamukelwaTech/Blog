@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Post from "../components/post";
 import Header from "../components/header";
-import Dashboard from "../components/dashboard";
+import Dashboard from "../components/detailedpost";
 
 class Home extends Component {
   constructor(props) {

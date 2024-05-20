@@ -3,6 +3,7 @@ import axios from "axios";
 import { ReactComponent as EditIcon } from "../assets/Icons/edit.svg";
 import { ReactComponent as DeleteIcon } from "../assets/Icons/delete.svg";
 import { ReactComponent as UpdateIcon } from "../assets/Icons/update.svg";
+import { ReactComponent as DetailIcon } from "../assets/Icons/eye.svg";
 
 class Post extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Post extends Component {
   render() {
     const { post, onShowDetailedPost } = this.props;
     const contentLength = this.state.content.length;
-    const iconSize = "0.6rem";
+    const iconSize = "0.7rem";
 
     const calculateMinHeight = () => {
       return contentLength <= 80 ? "40px" : "110px";
@@ -98,7 +99,7 @@ class Post extends Component {
                     className="bg-gray-500 text-white p-1 rounded-md flex items-center justify-center"
                     onClick={() => onShowDetailedPost(post)}
                   >
-                    Details
+                    <DetailIcon width={iconSize} height={iconSize} />
                   </button>
                 </>
               )}
