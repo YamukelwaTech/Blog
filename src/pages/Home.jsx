@@ -28,18 +28,15 @@ class Home extends Component {
       });
   };
 
-  handleDeletePost = (token) => {
-    this.setState((prevState) => ({
-      posts: prevState.posts.filter((post) => post.token !== token),
-    }));
-  };
-
-  handleShowDetailedPost = (post) => {
-    this.setState({ detailedPost: post });
-  };
-
-  handleCloseDetailedPost = () => {
-    this.setState({ detailedPost: null });
+  handleShowDetailedPost = (postToken) => {
+    axios
+      .get(`http://localhost:5000/posts/${postToken}`)
+      .then((response) => {
+        this.setState({ detailedPost: response.data });
+      })
+      .catch((error) => {
+        console.error("Error fetching detailed post information:", error);
+      });
   };
 
   render() {
@@ -54,7 +51,6 @@ class Home extends Component {
                 <div className="w-full">
                   <Post
                     post={post}
-                    onDelete={this.handleDeletePost}
                     onShowDetailedPost={this.handleShowDetailedPost}
                   />
                 </div>

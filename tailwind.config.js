@@ -5,9 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        customColor1: '#fefae0',
+      },
       height: {
         '128': '52rem',
-
       }
     },
   },
