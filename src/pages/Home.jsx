@@ -28,7 +28,7 @@ class Home extends Component {
       });
   };
 
-  handleShowDetailedPost = (postToken) => {
+  fetchDetailedPost = (postToken) => {
     axios
       .get(`http://localhost:5000/posts/${postToken}`)
       .then((response) => {
@@ -37,6 +37,10 @@ class Home extends Component {
       .catch((error) => {
         console.error("Error fetching detailed post information:", error);
       });
+  };
+
+  handleShowDetailedPost = (postToken) => {
+    this.fetchDetailedPost(postToken);
   };
 
   render() {
