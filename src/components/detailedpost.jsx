@@ -1,5 +1,4 @@
 import React from "react";
-import CommentSection from "./CommentSection";
 
 const Dashboard = ({ detailedPost }) => {
   if (!detailedPost) {
@@ -27,7 +26,6 @@ const Dashboard = ({ detailedPost }) => {
           />
         )}
         <p>{detailedPost.content}</p>
-        <CommentSection comments={detailedPost.comments} />
         <div className="flex items-center absolute bottom-4 left-4">
           {detailedPost.author && detailedPost.imageURL && (
             <img
