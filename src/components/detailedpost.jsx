@@ -1,6 +1,5 @@
 import React from "react";
-import { ReactComponent as EditIcon } from "../assets/Icons/edit.svg";
-import { ReactComponent as UpdateIcon } from "../assets/Icons/update.svg";
+import CommentSection from "./CommentSection";
 
 const Dashboard = ({ detailedPost }) => {
   if (!detailedPost) {
@@ -27,38 +26,27 @@ const Dashboard = ({ detailedPost }) => {
             }}
           />
         )}
-        <div className="h-full flex flex-col justify-between">
-          <p>{detailedPost.content}</p>
-          <div className="flex items-center absolute bottom-4 left-4">
-            {detailedPost.author && detailedPost.imageURL && (
-              <img
-                src={detailedPost.imageURL}
-                alt={detailedPost.author.name}
-                className="w-12 h-12 rounded-full mr-4"
-              />
+        <p>{detailedPost.content}</p>
+        <CommentSection comments={detailedPost.comments} />
+        <div className="flex items-center absolute bottom-4 left-4">
+          {detailedPost.author && detailedPost.imageURL && (
+            <img
+              src={detailedPost.imageURL}
+              alt={detailedPost.author.name}
+              className="w-12 h-12 rounded-full mr-4"
+            />
+          )}
+          <div className="flex">
+            {detailedPost.author && (
+              <>
+                <p className="text-sm mr-4">
+                  <strong>Author:</strong> {detailedPost.author.name}
+                </p>
+                <p className="text-sm">
+                  <strong>Email:</strong> {detailedPost.author.email}
+                </p>
+              </>
             )}
-            <div className="flex">
-              {detailedPost.author && (
-                <>
-                  <p className="text-sm mr-4">
-                    <strong>Author:</strong> {detailedPost.author.name}
-                  </p>
-                  <p className="text-sm">
-                    <strong>Email:</strong> {detailedPost.author.email}
-                  </p>
-                </>
-              )}
-            </div>
-            <div className="flex ml-52">
-              <div className="flex items-center">
-                <button className="bg-green-500 text-white p-1 rounded-md flex items-center justify-center mr-2">
-                  <UpdateIcon width="0.7rem" height="0.7rem" />
-                </button>
-                <button className="bg-blue-500 text-white p-1 rounded-md flex items-center justify-center mr-2">
-                  <EditIcon width="0.7rem" height="0.7rem" />
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
