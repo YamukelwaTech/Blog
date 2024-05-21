@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Post from "../components/post";
-import Header from "../components/navbar";
 import Dashboard from "../components/detailedpost";
 
 class Home extends Component {
@@ -46,8 +45,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Header onRefresh={this.fetchPosts} />
-
         <div className="flex flex-col md:flex-row mt-16">
           <div className="flex-grow px-2 md:px-0 md:w-1/2">
             {this.state.posts.map((post) => (
