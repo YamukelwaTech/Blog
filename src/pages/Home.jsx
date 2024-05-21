@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Post from "../components/post";
-import Header from "../components/header";
+import Header from "../components/navbar";
 import Dashboard from "../components/detailedpost";
 
 class Home extends Component {
@@ -19,7 +19,7 @@ class Home extends Component {
 
   fetchPosts = () => {
     axios
-      .get("http://localhost:5000/posts")
+      .get(`http://localhost:5000/posts`)
       .then((response) => {
         this.setState({ posts: response.data });
       })
