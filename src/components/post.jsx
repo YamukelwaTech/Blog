@@ -1,61 +1,56 @@
-import React, { Component } from "react";
-import { ReactComponent as DetailIcon } from "../assets/Icons/eye.svg";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-class Post extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editable: false,
-      description: this.props.post.description,
+const Post = () => {
+  const { token } = useParams();
+  const [article, setArticle] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/posts/${token}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post");
+        }
+        const data = await response.json();
+        setArticle(data);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
     };
-    this.containerRef = React.createRef();
-  }
 
-  handleDescriptionChange = (e) => {
-    this.setState({ description: e.target.value });
-  };
+    fetchPost();
+  }, [token]);
 
-  render() {
-    const { post, onShowDetailedPost } = this.props;
-    const iconSize = "0.7rem";
+  if (!article) return <div>Loading...</div>;
 
-    return (
-      <div
-        className="p-2 border-4 border-black rounded-md bg-customColor1 shadow-md mb-4 max-w-xl mx-auto mt-20 md:ml-10 overflow-x-scroll"
-        ref={this.containerRef}
-      >
-        <div className="flex items-center mb-2">
-          {post.imageURL && (
-            <img
-              className="w-9 h-9 rounded-full mr-2"
-              src={post.imageURL}
-              alt={post.title}
-            />
-          )}
-          <span className="text-sm md:text-base">{post.author.name}</span>
-          <div className="ml-auto mr-4">
-            <div className="flex space-x-2">
-              <button
-                className="bg-gray-500 text-white p-1 rounded-md flex items-center justify-center"
-                onClick={() => onShowDetailedPost(post.token)}
-              >
-                <DetailIcon width={iconSize} height={iconSize} />
-              </button>
-            </div>
-          </div>
-        </div>
-        <h2 className="text-lg font-semibold mb-2 p-2">{post.title}</h2>
-        <div className="p-2">
-          <p
-            className="w-full h-10 mb-2 resize-none text-sm md:text-base rounded-md bg-customColor1"
-            style={{ border: "none" }}
-          >
-            {this.state.description}
+  return (
+    <div className="w-full p-12 bg-customColor1">
+      <div className="header">
+        <button
+          onClick={() => window.history.back()}
+          className="block mt-4 text-sm text-gray-500 hover:text-gray-700"
+        >
+          ← Back
+        </button>
+        <h1 className="text-4xl font-bold">{article.title}</h1>
+        <p className="text-xl">{article.description}</p>
+        <div className="author">
+          <img
+            alt={article.author.name}
+            src={article.imageURL || "/images/person/default.jpg"}
+            className="h-10 w-10 rounded-full"
+          />
+          <p>{article.author.name}</p>
+          <p>
+            {new Date(article.publishedDate).toLocaleDateString()} -{" "}
+            {article.readTime} min read
           </p>
         </div>
       </div>
-    );
-  }
-}
+      <div className="content">{article.content}</div>
+    </div>
+  );
+};
 
 export default Post;
