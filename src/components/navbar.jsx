@@ -6,7 +6,7 @@ import { GlobalStateContext } from '../GlobalStateContext';
 const navLinks = [
   { title: 'Feed', url: '/' },
   { title: 'PostUp', url: '/new-post' },
-  { title: 'Services', url: '/services' },
+  { title: 'PostMe', url: '/services' },
   { title: 'Contact', url: '/contact' },
 ];
 

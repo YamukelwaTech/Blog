@@ -7,6 +7,7 @@ const GlobalStateProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
   const [showModal, setShowModal] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [article, setArticle] = useState(null);
 
   useEffect(() => {
     const generateRandomPublishTime = () => {
@@ -55,6 +56,8 @@ const GlobalStateProvider = ({ children }) => {
         showModal,
         toggleModal,
         articles,
+        article, 
+        setArticle,
       }}
     >
       {children}
