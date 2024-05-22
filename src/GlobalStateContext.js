@@ -56,7 +56,7 @@ const GlobalStateProvider = ({ children }) => {
         showModal,
         toggleModal,
         articles,
-        article, 
+        article,
         setArticle,
       }}
     >

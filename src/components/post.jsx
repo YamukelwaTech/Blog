@@ -1,10 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
 
 const Post = () => {
   const { token } = useParams();
   const { article, setArticle } = useContext(GlobalStateContext);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -22,6 +23,36 @@ const Post = () => {
 
     fetchPost();
   }, [token, setArticle]);
+
+  const handleCommentSubmit = async () => {
+    if (newComment.trim() !== "") {
+      try {
+        const updatedArticle = { ...article };
+        updatedArticle.comments.push({
+          user: "Current User",
+          text: newComment,
+          timestamp: new Date().toISOString(),
+        });
+
+        const response = await fetch(`http://localhost:5000/posts/${token}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedArticle),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update post");
+        }
+
+        setArticle(updatedArticle);
+        setNewComment("");
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
+    }
+  };
 
   if (!article) return <div>Loading...</div>;
 
@@ -60,6 +91,29 @@ const Post = () => {
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <div className="px-4 lg:px-0 mt-12 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
             <p className="pb-6">{article.content}</p>
+            {/* Comments Section */}
+            <div className="border-t border-gray-300 mt-8 pt-8">
+              <h2 className="text-2xl font-semibold mb-4">Comments</h2>
+              {/* Display existing comments */}
+              {article.comments.map((comment, index) => (
+                <div key={index} className="border border-gray-300 p-4 mb-4">
+                  <h3 className="font-semibold">{comment.user}</h3>
+                  <p>{comment.text}</p>
+                  <p>{comment.timestamp}</p>
+                </div>
+              ))}
+              {/* Input field for adding new comment */}
+              <div className="p-1 mb-1">
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add your comment..."
+                  className="border border-gray-300 p-1 mb-1"
+                />
+                <button onClick={handleCommentSubmit} className="bg-blue-500 text-white px-4 py-1 rounded">Add Comment</button>
+              </div>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/4 m-auto mt-12 max-w-screen-sm">
