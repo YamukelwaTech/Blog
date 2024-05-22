@@ -1,35 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const generateRandomPublishTime = () => {
-  const start = new Date(2020, 0, 1).getTime();
-  const end = new Date().getTime();
-  const randomTime = new Date(start + Math.random() * (end - start));
-  return randomTime;
-};
-
-const generateRandomReadTime = () => {
-  return Math.floor(Math.random() * 35) + 1;
-};
+import React, { useContext } from "react";
+import { GlobalStateContext } from "../GlobalStateContext";
 
 const Blog = () => {
-  const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/posts")
-      .then((response) => {
-        const articlesWithTimes = response.data.map((article) => ({
-          ...article,
-          publishedDate: generateRandomPublishTime(),
-          readTime: generateRandomReadTime(),
-        }));
-        setArticles(articlesWithTimes);
-      })
-      .catch((error) => {
-        console.error("Error fetching articles:", error);
-      });
-  }, []);
+  const { articles } = useContext(GlobalStateContext);
 
   return (
     <div className="w-full p-12 bg-customColor1">

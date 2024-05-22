@@ -6,25 +6,24 @@ import pic4 from "../assets/imgs/toa-heftiba-QnUywvDdI1o-unsplash.jpg";
 
 const Hero = () => {
   return (
-    <div className="relative max-w-screen-xl p-4 px-4 mx-auto bg-customColor3 sm:px-6 lg:px-8 py-26 lg:mt-20">
+    <div className="relative max-w-screen-xl p-4 px-4 mx-auto bg-customColor1 sm:px-6 lg:px-8 py-26 lg:mt-20">
       <div className="relative">
         <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-8 lg:items-center">
           <div className="ml-auto lg:col-start-2 lg:max-w-2xl">
-            <p className="text-base font-semibold leading-6 text-indigo-500 uppercase">
-              Interactive
+            <p className="text-base font-bold leading-6 text-customColor2 uppercase">
+              The Blogging Site You need
             </p>
-            <h4 className="mt-2 text-2xl font-extrabold leading-8 text-gray-900 dark:text-white sm:text-3xl sm:leading-9">
-              Interactivity between team members is the key of the success.
+            <h4 className="mt-2 text-2xl font-extrabold leading-8 text-gray-900 dark:text-customColor5 sm:text-3xl sm:leading-9">
+              At Yamukelwa Blogs, we provide a simple and powerful collaborative
+              space for yourself. Track, share, measure—you have full control.
             </h4>
-            <p className="mt-4 text-lg leading-6 text-gray-500 dark:text-gray-300">
-              Build a simple and powerful collaborative space for all your team.
-              Track, share, measure, you have full control. It's never been
-              simpler and more efficient.
+            <p className="mt-4 text-lg leading-6 font-bold text-customColor2">
+              Interactivity between is is the key to success.
             </p>
             <ul className="gap-6 mt-8 md:grid md:grid-cols-2">
               <li className="mt-6 lg:mt-0">
                 <div className="flex">
-                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-green-800 bg-green-100 rounded-full dark:text-green-500 dark:bg-transparent">
+                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-customColor1 bg-customColor4 rounded-full ">
                     <svg
                       className="w-4 h-4"
                       viewBox="0 0 20 20"
@@ -37,14 +36,14 @@ const Hero = () => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-4 text-base font-medium leading-6 text-gray-500 dark:text-gray-200">
+                  <span className="ml-4 text-base font-bold leading-6 text-customColor2 ">
                     Live modifications
                   </span>
                 </div>
               </li>
               <li className="mt-6 lg:mt-0">
                 <div className="flex">
-                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-green-800 bg-green-100 rounded-full dark:text-green-500 dark:bg-transparent">
+                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6  text-customColor1 bg-customColor4 rounded-full ">
                     <svg
                       className="w-4 h-4"
                       viewBox="0 0 20 20"
@@ -57,14 +56,14 @@ const Hero = () => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-4 text-base font-medium leading-6 text-gray-500 dark:text-gray-200">
+                  <span className="ml-4 text-base font-bold leading-6 text-customColor2 ">
                     Data tracker
                   </span>
                 </div>
               </li>
               <li className="mt-6 lg:mt-0">
                 <div className="flex">
-                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-green-800 bg-green-100 rounded-full dark:text-green-500 dark:bg-transparent">
+                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-customColor1 bg-customColor4 rounded-full ">
                     <svg
                       className="w-4 h-4"
                       viewBox="0 0 20 20"
@@ -77,14 +76,14 @@ const Hero = () => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-4 text-base font-medium leading-6 text-gray-500 dark:text-gray-200">
+                  <span className="ml-4 text-base font-bold leading-6 text-customColor2 ">
                     24/7 support
                   </span>
                 </div>
               </li>
               <li className="mt-6 lg:mt-0">
                 <div className="flex">
-                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-green-800 bg-green-100 rounded-full dark:text-green-500 dark:bg-transparent">
+                  <span className="flex items-center justify-center flex-shrink-0 w-6 h-6 text-customColor1 bg-customColor4 rounded-full ">
                     <svg
                       className="w-4 h-4"
                       viewBox="0 0 20 20"
@@ -97,8 +96,8 @@ const Hero = () => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-4 text-base font-medium leading-6 text-gray-500 dark:text-gray-200">
-                    Free tips to improve work time
+                  <span className="ml-4 text-base font-bold leading-6 text-customColor2 ">
+                    Free tips
                   </span>
                 </div>
               </li>
