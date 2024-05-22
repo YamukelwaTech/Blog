@@ -21,12 +21,10 @@ const Newpost = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      author: {
-        ...prevData.author,
-        [name]: value,
-      },
+      [name]: value,
     }));
   };
+
 
   const handleImageChange = (e, field) => {
     setFormData((prevData) => ({
@@ -60,9 +58,8 @@ const Newpost = () => {
 
       console.log("Upload successful:", response.data);
 
-      // Redirect to the blog section after successful upload
-      navigate("/blog"); // Use navigate instead of history.push
 
+      navigate("/blog");
     } catch (error) {
       console.error("Upload failed:", error.message);
     }
