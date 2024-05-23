@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Post = () => {
   const { token } = useParams();
@@ -10,7 +11,7 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/posts/${token}`);
+        const response = await fetch(`${backendUrl}/posts/${token}`);
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -34,7 +35,7 @@ const Post = () => {
           timestamp: new Date().toISOString(),
         });
 
-        const response = await fetch(`http://localhost:5000/posts/${token}`, {
+        const response = await fetch(`${backendUrl}/posts/${token}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +112,12 @@ const Post = () => {
                   placeholder="Add your comment..."
                   className="border border-gray-300 p-1 mb-1"
                 />
-                <button onClick={handleCommentSubmit} className="bg-blue-500 text-white px-4 py-1 rounded">Add Comment</button>
+                <button
+                  onClick={handleCommentSubmit}
+                  className="bg-blue-500 text-white px-4 py-1 rounded"
+                >
+                  Add Comment
+                </button>
               </div>
             </div>
           </div>

@@ -21,8 +21,10 @@ const GlobalStateProvider = ({ children }) => {
       return Math.floor(Math.random() * 35) + 1;
     };
 
+    // console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
+
     axios
-      .get("http://localhost:5000/posts")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/posts`)
       .then((response) => {
         const articlesWithTimes = response.data.map((article) => ({
           ...article,
@@ -44,6 +46,29 @@ const GlobalStateProvider = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // useEffect(() => {
+  //   const ws = new WebSocket("ws://localhost:5000");
+
+  //   ws.onopen = () => {
+  //     console.log("Connected to WebSocket server");
+  //   };
+
+  //   ws.onmessage = (event) => {
+  //     const message = JSON.parse(event.data);
+  //     if (message.type === "new_post") {
+  //       setArticles((prevArticles) => [message.post, ...prevArticles]);
+  //     }
+  //   };
+
+  //   ws.onclose = () => {
+  //     console.log("Disconnected from WebSocket server");
+  //   };
+
+  //   return () => {
+  //     ws.close();
+  //   };
+  // }, []);
 
   const toggleModal = () => {
     setShowModal(!showModal);
