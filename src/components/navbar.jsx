@@ -7,7 +7,7 @@ const navLinks = [
   { title: 'Feed', url: '/' },
   { title: 'PostUp', url: '/blog' },
   { title: 'PostMe', url: '/newpost' },
-  { title: 'Contact', url: '/contact' },
+  // { title: 'Contact', url: '/contact' },
 ];
 
 const bgColor = 'bg-customColor1';
