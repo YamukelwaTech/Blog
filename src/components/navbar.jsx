@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { GlobalStateContext } from '../GlobalStateContext';
+import blog from "../assets/Icons/blog.png";
 
 const navLinks = [
   { title: 'FeedMe', url: '/' },
@@ -19,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className={`w-full ${bgColor} ${isMobile ? 'py-4 px-4' : 'py-7 px-8 md:px-44'} sticky top-0 z-50`}>
       <div className="flex justify-between items-center">
-        <div className="text-customColor2 font-bold text-xl">YamukelwaBlogs</div>
+        <div className="text-customColor2 font-bold text-xl flex items-center">YamukelwaBlogs <img src={blog} alt="Blog Icon" className="ml-2 h-6 w-6" /></div>
         {isMobile ? (
           <div className="flex items-center gap-4 text-customColor2 cursor-pointer">
             <FaBars onClick={toggleModal} className="text-customColor2 cursor-pointer" />
