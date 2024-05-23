@@ -16,6 +16,7 @@ const Newpost = () => {
   });
 
   const navigate = useNavigate(); // Initialize useNavigate
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +25,6 @@ const Newpost = () => {
       [name]: value,
     }));
   };
-
 
   const handleImageChange = (e, field) => {
     setFormData((prevData) => ({
@@ -46,18 +46,13 @@ const Newpost = () => {
       formDataToSend.append("imageURL", formData.imageURL);
       formDataToSend.append("backgroundimg", formData.backgroundimg);
 
-      const response = await axios.post(
-        "http://localhost:5000/posts",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${backendUrl}/posts`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log("Upload successful:", response.data);
-
 
       navigate("/blog");
     } catch (error) {
