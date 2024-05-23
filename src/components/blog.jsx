@@ -33,7 +33,7 @@ const Blog = () => {
           return (
             <div
               key={article.token}
-              className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-96"
+              className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-91"
             >
               <Link to={`/post/${article.token}`} className="block w-full h-full">
                 <img
