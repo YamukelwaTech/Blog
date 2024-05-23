@@ -4,7 +4,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { GlobalStateContext } from '../GlobalStateContext';
 
 const navLinks = [
-  { title: 'Feed', url: '/' },
+  { title: 'FeedMe', url: '/' },
   { title: 'PostUp', url: '/blog' },
   { title: 'PostMe', url: '/newpost' },
   // { title: 'Contact', url: '/contact' },
