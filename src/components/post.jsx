@@ -114,9 +114,9 @@ const Post = () => {
               {/* Display existing comments */}
               {article.comments.map((comment, index) => (
                 <div key={index} className="border p-4 mb-4">
-                  <h3 className="font-semibold">{comment.user}</h3>
-                  <p>{comment.text}</p>
-                  <p>{comment.timestamp}</p>
+                  <h3 className="font-semibold text-sm lg:text-base">{comment.user}</h3>
+                  <p className="text-sm lg:text-base">{comment.text}</p>
+                  <p className="text-sm lg:text-base">{comment.timestamp}</p>
                 </div>
               ))}
               {/* Input field for adding new comment */}
@@ -126,11 +126,12 @@ const Post = () => {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add your comment..."
-                  className="border border-gray-300 p-1 mb-2 bg-inherit"
+                  className="border border-gray-300 p-1 mb-2 bg-inherit text-sm lg:text-base"
                 />
                 <button
                   onClick={handleCommentSubmit}
                   className="bg-customColor3 text-black px-4 py-1 rounded ml-2 font-bold text-sm lg:text-base"
+                  disabled
                 >
                   Add Comment
                 </button>
