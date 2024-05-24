@@ -1,12 +1,15 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
+import loading from "../assets/Icons/loading.png";
+
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Post = () => {
   const { token } = useParams();
   const { article, setArticle } = useContext(GlobalStateContext);
   const [newComment, setNewComment] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -17,6 +20,7 @@ const Post = () => {
         }
         const data = await response.json();
         setArticle(data);
+        setIsLoading(false); // Set loading to false after fetching
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -55,27 +59,39 @@ const Post = () => {
     }
   };
 
-  if (!article) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <img
+          src={loading}
+          alt="Loading Icon"
+          style={{ width: "10%", height: "auto" }}
+        />
+      </div>
+    );
+  }
+
+  if (!article) return null;
 
   return (
     <div className="w-full p-12 bg-customColor1">
       <div className="header">
         <button
           onClick={() => window.history.back()}
-          className="block mt-4 text-sm text-gray-500 hover:text-gray-700"
+          className="block mt-4 text-sm text-black hover:text-customColor4 font-extrabold"
         >
           ← Back
         </button>
       </div>
-      <div className="mt-10">
+      <div className="mt-5 sm:mt-6 md:mt-9 lg:mt-10 xl:mt-10">
         <div className="mb-4 md:mb-0 w-full mx-auto relative">
           <div className="px-4 lg:px-0">
-            <h2 className="text-4xl font-semibold text-gray-800 leading-tight">
+            <h2 className="lg:text-4xl font-semibold text-gray-800 leading-tight text-xl">
               {article.description}
             </h2>
             <p
               href="#"
-              className="py-2 text-green-700 inline-flex items-center justify-center mb-2"
+              className="py-2 text-green-700 inline-flex items-center justify-center mb-2 text-lg font-bold"
             >
               {article.title}
             </p>
@@ -83,38 +99,39 @@ const Post = () => {
 
           <img
             src={article.backgroundimg}
-            className="w-full object-cover lg:rounded"
+            className="w-full h-auto lg:rounded object-cover"
             style={{ height: "23em" }}
             alt={article.title}
           />
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-12">
-          <div className="px-4 lg:px-0 mt-12 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
-            <p className="pb-6">{article.content}</p>
+          <div className="px-4 lg:px-0 mt-12 text-gray-700 text-base lg:text-lg leading-relaxed w-full lg:w-3/4">
+            <p className="pb-6 text-sm lg:text-lg font-semibold">{article.content}</p>
             {/* Comments Section */}
             <div className="border-t border-gray-300 mt-8 pt-8">
               <h2 className="text-2xl font-semibold mb-4">Comments</h2>
               {/* Display existing comments */}
               {article.comments.map((comment, index) => (
-                <div key={index} className="border border-gray-300 p-4 mb-4">
-                  <h3 className="font-semibold">{comment.user}</h3>
-                  <p>{comment.text}</p>
-                  <p>{comment.timestamp}</p>
+                <div key={index} className="border p-4 mb-4">
+                  <h3 className="font-semibold text-sm lg:text-base">{comment.user}</h3>
+                  <p className="text-sm lg:text-base">{comment.text}</p>
+                  <p className="text-sm lg:text-base">{comment.timestamp}</p>
                 </div>
               ))}
               {/* Input field for adding new comment */}
-              <div className="p-1 mb-1">
+              <div className="p-1 mb-10"> {/* Added margin bottom here */}
                 <input
                   type="text"
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add your comment..."
-                  className="border border-gray-300 p-1 mb-1"
+                  className="border border-gray-300 p-1 mb-2 bg-inherit text-sm lg:text-base"
                 />
                 <button
                   onClick={handleCommentSubmit}
-                  className="bg-blue-500 text-white px-4 py-1 rounded"
+                  className="bg-customColor3 text-black px-4 py-1 rounded ml-2 font-bold text-sm lg:text-base"
+                  disabled
                 >
                   Add Comment
                 </button>

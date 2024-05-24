@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
+import right from "../assets/Icons/right.png";
 
 const Blog = () => {
   const { articles } = useContext(GlobalStateContext);
@@ -19,8 +20,11 @@ const Blog = () => {
           <p className="mb-4 text-3xl font-bold text-customColor2">
             Latest YamuBlogs
           </p>
-          <p className="text-xl font-semibold text-customColor2">
-            All articles are verified by 2 experts and validated by Yamukelwa
+          <p className="text-sm md:text-xl font-semibold text-customColor2 flex items-center">
+            All articles are verified
+            <span className="ml-2 text-customColr2">
+              <img src={right} alt="Right Icon" className="h-4 w-4 md:h-6 md:w-6" />
+            </span>
           </p>
         </div>
       </div>
@@ -29,7 +33,7 @@ const Blog = () => {
           return (
             <div
               key={article.token}
-              className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-60 md:w-80"
+              className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-91"
             >
               <Link to={`/post/${article.token}`} className="block w-full h-full">
                 <img
