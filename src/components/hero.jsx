@@ -18,7 +18,7 @@ const Hero = () => {
               space for yourself. Track, share, measure—you have full control.
             </h4>
             <p className="mt-4 text-lg leading-6 font-bold text-customColor2">
-              Interactivity between is is the key to success.
+              Interactivity between is the key to success.
             </p>
             <ul className="gap-6 mt-8 md:grid md:grid-cols-2">
               <li className="mt-6 lg:mt-0">
