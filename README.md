@@ -7,3 +7,4 @@
 
 #### Documentation
 ###### New readme
+###### Fixed 404 Error when reloading : https://answers.netlify.com/t/refresh-get-not-found-page/105840
