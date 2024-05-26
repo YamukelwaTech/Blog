@@ -1,4 +1,5 @@
 import React from "react";
+import LazyLoad from 'react-lazyload';
 import pic1 from "../assets/imgs/carol-magalhaes-dSsXm15D9hg-unsplash.jpg";
 import pic2 from "../assets/imgs/gilles-lambert-pb_lF8VWaPU-unsplash.jpg";
 import pic3 from "../assets/imgs/psk-slayer-8Syeat16I-g-unsplash.jpg";
@@ -106,32 +107,40 @@ const Hero = () => {
           <div className="relative mt-10 lg:-mx-4 relative-20 lg:mt-0 lg:col-start-1">
             <div className="relative space-y-4">
               <div className="flex items-end justify-center space-x-4 lg:justify-start">
-                <img
-                  className="w-32 rounded-lg shadow-lg md:w-56"
-                  width="200"
-                  src={pic1}
-                  alt="1"
-                />
-                <img
-                  className="w-40 rounded-lg shadow-lg md:w-64"
-                  width="260"
-                  src={pic2}
-                  alt="2"
-                />
+                <LazyLoad height={200} offset={100}>
+                  <img
+                    className="w-32 rounded-lg shadow-lg md:w-56"
+                    width="200"
+                    src={pic1}
+                    alt="1"
+                  />
+                </LazyLoad>
+                <LazyLoad height={260} offset={100}>
+                  <img
+                    className="w-40 rounded-lg shadow-lg md:w-64"
+                    width="260"
+                    src={pic2}
+                    alt="2"
+                  />
+                </LazyLoad>
               </div>
               <div className="flex items-start justify-center ml-12 space-x-4 lg:justify-start">
-                <img
-                  className="w-24 rounded-lg shadow-lg md:w-40"
-                  width="170"
-                  src={pic3}
-                  alt="3"
-                />
-                <img
-                  className="w-32 rounded-lg shadow-lg md:w-56"
-                  width="200"
-                  src={pic4}
-                  alt="4"
-                />
+                <LazyLoad height={170} offset={100}>
+                  <img
+                    className="w-24 rounded-lg shadow-lg md:w-40"
+                    width="170"
+                    src={pic3}
+                    alt="3"
+                  />
+                </LazyLoad>
+                <LazyLoad height={200} offset={100}>
+                  <img
+                    className="w-32 rounded-lg shadow-lg md:w-56"
+                    width="200"
+                    src={pic4}
+                    alt="4"
+                  />
+                </LazyLoad>
               </div>
             </div>
           </div>

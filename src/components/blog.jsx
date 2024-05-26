@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
+import LazyLoad from 'react-lazyload';
 import right from "../assets/Icons/right.png";
 
 const Blog = () => {
@@ -36,11 +37,13 @@ const Blog = () => {
               className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-91"
             >
               <Link to={`/post/${article.token}`} className="block w-full h-full">
-                <img
-                  alt={article.title}
-                  src={article.backgroundimg || "/images/blog/default.jpg"}
-                  className="object-cover w-full max-h-40"
-                />
+                <LazyLoad height={200} offset={100}> 
+                  <img
+                    alt={article.title}
+                    src={article.backgroundimg || "/images/blog/default.jpg"}
+                    className="object-cover w-full max-h-40"
+                  />
+                </LazyLoad>
                 <div className="w-full p-4 dark:bg-customColor5">
                   <p className="mb-2 text-xl font-medium text-gray-800 dark:text-white">
                     {article.title}
