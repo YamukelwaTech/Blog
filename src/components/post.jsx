@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import { GlobalStateContext } from "../GlobalStateContext";
 import loading from "../assets/Icons/loading.png";
 
@@ -9,18 +10,14 @@ const Post = () => {
   const { token } = useParams();
   const { article, setArticle } = useContext(GlobalStateContext);
   const [newComment, setNewComment] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`${backendUrl}/posts/${token}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch post");
-        }
-        const data = await response.json();
-        setArticle(data);
-        setIsLoading(false); // Set loading to false after fetching
+        const response = await axios.get(`${backendUrl}/posts/${token}`);
+        setArticle(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -32,29 +29,20 @@ const Post = () => {
   const handleCommentSubmit = async () => {
     if (newComment.trim() !== "") {
       try {
-        const updatedArticle = { ...article };
-        updatedArticle.comments.push({
-          user: "Current User",
+        const comment = {
+          user: "Current User",  // Replace with actual user data
           text: newComment,
           timestamp: new Date().toISOString(),
-        });
+        };
 
-        const response = await fetch(`${backendUrl}/posts/${token}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedArticle),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to update post");
-        }
-
-        setArticle(updatedArticle);
+        const response = await axios.post(`${backendUrl}/posts/${token}/comments`, comment);
+        setArticle((prevArticle) => ({
+          ...prevArticle,
+          comments: [...prevArticle.comments, response.data],
+        }));
         setNewComment("");
       } catch (error) {
-        console.error("Error updating post:", error);
+        console.error("Error adding comment:", error);
       }
     }
   };
@@ -108,10 +96,8 @@ const Post = () => {
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <div className="px-4 lg:px-0 mt-12 text-gray-700 text-base lg:text-lg leading-relaxed w-full lg:w-3/4">
             <p className="pb-6 text-sm lg:text-lg font-semibold">{article.content}</p>
-            {/* Comments Section */}
             <div className="border-t border-gray-300 mt-8 pt-8">
               <h2 className="text-2xl font-semibold mb-4">Comments</h2>
-              {/* Display existing comments */}
               {article.comments.map((comment, index) => (
                 <div key={index} className="border p-4 mb-4">
                   <h3 className="font-semibold text-sm lg:text-base">{comment.user}</h3>
@@ -119,8 +105,7 @@ const Post = () => {
                   <p className="text-sm lg:text-base">{comment.timestamp}</p>
                 </div>
               ))}
-              {/* Input field for adding new comment */}
-              <div className="p-1 mb-10"> {/* Added margin bottom here */}
+              <div className="p-1 mb-10">
                 <input
                   type="text"
                   value={newComment}
@@ -131,7 +116,6 @@ const Post = () => {
                 <button
                   onClick={handleCommentSubmit}
                   className="bg-customColor3 text-black px-4 py-1 rounded ml-2 font-bold text-sm lg:text-base"
-                  disabled
                 >
                   Add Comment
                 </button>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { GlobalStateContext } from "../GlobalStateContext";
 
 const Newpost = () => {
   const [formData, setFormData] = useState({
@@ -15,15 +16,24 @@ const Newpost = () => {
     backgroundimg: null,
   });
 
+  const { articles, setArticles } = useContext(GlobalStateContext);
   const navigate = useNavigate();
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (name.startsWith("author.")) {
+      const [_, field] = name.split(".");
+      setFormData((prevData) => ({
+        ...prevData,
+        author: { ...prevData.author, [field]: value },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleImageChange = (e, field) => {
@@ -54,6 +64,9 @@ const Newpost = () => {
 
       console.log("Upload successful:", response.data);
 
+      // Update global articles state
+      setArticles((prevArticles) => [...prevArticles, response.data]);
+
       navigate("/blog");
     } catch (error) {
       console.error("Upload failed:", error.message);
@@ -65,7 +78,10 @@ const Newpost = () => {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            <label htmlFor="title" className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor="title"
+              className="block mb-2 font-semibold text-gray-700"
+            >
               Main Title:
             </label>
             <input
@@ -79,7 +95,10 @@ const Newpost = () => {
             />
           </div>
           <div>
-            <label htmlFor="description" className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor="description"
+              className="block mb-2 font-semibold text-gray-700"
+            >
               Article Title:
             </label>
             <input
@@ -93,7 +112,10 @@ const Newpost = () => {
             />
           </div>
           <div className="col-span-2">
-            <label htmlFor="imageURL" className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor="imageURL"
+              className="block mb-2 font-semibold text-gray-700"
+            >
               Upload Main Image:
             </label>
             <input
@@ -105,7 +127,10 @@ const Newpost = () => {
             />
           </div>
           <div className="col-span-2">
-            <label htmlFor="backgroundimg" className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor="backgroundimg"
+              className="block mb-2 font-semibold text-gray-700"
+            >
               Upload Background Image:
             </label>
             <input
@@ -117,7 +142,10 @@ const Newpost = () => {
             />
           </div>
           <div className="col-span-2">
-            <label htmlFor="content" className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor="content"
+              className="block mb-2 font-semibold text-gray-700"
+            >
               Content:
             </label>
             <textarea
@@ -133,7 +161,7 @@ const Newpost = () => {
             <input
               type="text"
               name="author.name"
-              value={formData["author.name"]}
+              value={formData.author.name}
               onChange={handleChange}
               placeholder="Name"
               className="font-semibold text-gray-700 text-sm w-full border-b-2 border-gray-800 focus:outline-none bg-inherit py-2"
@@ -143,7 +171,7 @@ const Newpost = () => {
             <input
               type="email"
               name="author.email"
-              value={formData["author.email"]}
+              value={formData.author.email}
               onChange={handleChange}
               placeholder="Email"
               className="font-semibold text-gray-600 text-xs w-full mt-2 border-b-2 border-gray-800 focus:outline-none bg-inherit py-2"
@@ -153,7 +181,6 @@ const Newpost = () => {
         <button
           type="submit"
           className="mt-4 bg-customColor3 text-black px-4 py-2 rounded font-semibold"
-          disabled
         >
           Upload
         </button>
