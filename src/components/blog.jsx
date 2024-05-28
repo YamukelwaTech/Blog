@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { GlobalStateContext } from "../GlobalStateContext";
 import LazyLoad from 'react-lazyload';
 import right from "../assets/Icons/right.png";
+import axios from 'axios';
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Blog = () => {
-  const { articles } = useContext(GlobalStateContext);
+  const { articles, setArticles } = useContext(GlobalStateContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,6 +21,33 @@ const Blog = () => {
       setLoading(false);
     }
   }, [articles]);
+
+  const handleDelete = async (token) => {
+    try {
+      const response = await axios.delete(`${backendUrl}/posts/${token}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.status === 204) {
+        setArticles((prevArticles) => prevArticles.filter(article => article.token !== token));
+      } else {
+        console.error('Failed to delete the post, status code:', response.status);
+        console.error('Response:', response.data);
+      }
+    } catch (error) {
+      console.error('An error occurred while deleting the post:', error);
+      if (error.response) {
+        console.error('Status code:', error.response.status);
+        console.error('Response data:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+    }
+  };
 
   return (
     <div className="w-full p-12 bg-customColor1">
@@ -43,12 +73,17 @@ const Blog = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-            {articles.map((article) => {
-              return (
-                <div
-                  key={article.token}
-                  className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-91"
-                >
+            {articles.map((article, index) => (
+              <div key={article.token} className="relative">
+                {index >= 12 && (
+                  <button
+                    onClick={() => handleDelete(article.token)}
+                    className="absolute top-0 right-0 mt-1 mr-1 p-1 bg-red-600 text-white rounded-full"
+                  >
+                    &times;
+                  </button>
+                )}
+                <div className="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-72 md:w-80 xl:w-91">
                   <Link to={`/post/${article.token}`} className="block w-full h-full">
                     <LazyLoad height={200} offset={100}>
                       <img
@@ -85,8 +120,8 @@ const Blog = () => {
                     </div>
                   </Link>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </>
       )}
