@@ -114,7 +114,7 @@ const Newpost = () => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="border-b-2 border-gray-800 focus:outline-none bg-inherit w-full py-2"
+              className=" focus:outline-none bg-inherit w-full py-2"
               placeholder="Enter main title"
             />
             {errors.title && <p className="text-red-500">{errors.title}</p>}
@@ -132,7 +132,7 @@ const Newpost = () => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="border-b-2 border-gray-800 focus:outline-none bg-inherit w-full py-2"
+              className=" focus:outline-none bg-inherit w-full py-2"
               placeholder="Enter article title"
             />
             {errors.description && (
@@ -186,7 +186,7 @@ const Newpost = () => {
               name="content"
               value={formData.content}
               onChange={handleChange}
-              className="border-b-2 border-gray-800 focus:outline-none bg-inherit w-full py-2"
+              className=" focus:outline-none bg-inherit w-full py-2"
               placeholder="Enter text"
               style={{ height: "10em" }}
             />
@@ -199,7 +199,7 @@ const Newpost = () => {
               value={formData.author.name}
               onChange={handleChange}
               placeholder="Name"
-              className="font-semibold text-gray-700 text-sm w-full border-b-2 border-gray-800 focus:outline-none bg-inherit py-2"
+              className="font-semibold text-gray-700 text-sm w-full focus:outline-none bg-inherit py-2"
             />
             {errors.authorName && (
               <p className="text-red-500">{errors.authorName}</p>
@@ -212,7 +212,7 @@ const Newpost = () => {
               value={formData.author.email}
               onChange={handleChange}
               placeholder="Email"
-              className="font-semibold text-gray-600 text-xs w-full mt-2 border-b-2 border-gray-800 focus:outline-none bg-inherit py-2"
+              className="font-semibold text-gray-600 text-xs w-full mt-2  focus:outline-none bg-inherit py-2"
             />
             {errors.authorEmail && (
               <p className="text-red-500">{errors.authorEmail}</p>
