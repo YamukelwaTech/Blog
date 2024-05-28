@@ -11,6 +11,7 @@ const Post = () => {
   const { article, setArticle } = useContext(GlobalStateContext);
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [commentLoading, setCommentLoading] = useState(false); 
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -29,8 +30,10 @@ const Post = () => {
   const handleCommentSubmit = async () => {
     if (newComment.trim() !== "") {
       try {
+        setCommentLoading(true);
+
         const comment = {
-          user: "Current User",  // Replace with actual user data
+          user: "Current User",
           text: newComment,
           timestamp: new Date().toISOString(),
         };
@@ -43,6 +46,8 @@ const Post = () => {
         setNewComment("");
       } catch (error) {
         console.error("Error adding comment:", error);
+      } finally {
+        setCommentLoading(false);
       }
     }
   };
@@ -116,8 +121,9 @@ const Post = () => {
                 <button
                   onClick={handleCommentSubmit}
                   className="bg-customColor3 text-black px-4 py-1 rounded ml-2 font-bold text-sm lg:text-base"
+                  disabled={commentLoading}
                 >
-                  Add Comment
+                  {commentLoading ? "Adding Comment..." : "Add Comment"}
                 </button>
               </div>
             </div>
