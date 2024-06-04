@@ -9,3 +9,4 @@
 ###### New readme
 ###### Fixed 404 Error when reloading : https://answers.netlify.com/t/refresh-get-not-found-page/105840
 ###### This is V1 of my frontend blog will post link to V2
+# blogv2
