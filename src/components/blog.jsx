@@ -7,9 +7,17 @@ import axios from 'axios';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
+const loadingMessages = [
+  "Fetching all the latest posts...",
+  "Hang tight, fetching new content...",
+  "Almost there, getting the latest updates...",
+  "Please wait, loading fresh articles..."
+];
+
 const Blog = () => {
   const { articles, setArticles } = useContext(GlobalStateContext);
   const [loading, setLoading] = useState(true);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
 
   useEffect(() => {
     console.log("Logging article tokens once when articles change:");
@@ -21,6 +29,14 @@ const Blog = () => {
       setLoading(false);
     }
   }, [articles]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoadingMessageIndex((prevIndex) => (prevIndex + 1) % loadingMessages.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleDelete = async (token) => {
     try {
@@ -54,7 +70,7 @@ const Blog = () => {
       {loading ? (
         <div className="flex items-center justify-center h-full">
           <p className="text-2xl font-semibold text-customColor2">
-            Fetching all the latest posts...
+            {loadingMessages[loadingMessageIndex]}
           </p>
         </div>
       ) : (
