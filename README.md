@@ -10,7 +10,7 @@
 
 ---
 
-###### Tech Stack: HTML5 & CSS
+###### Tech Stack: Tailwind ReactJS API
 
 ---
 
